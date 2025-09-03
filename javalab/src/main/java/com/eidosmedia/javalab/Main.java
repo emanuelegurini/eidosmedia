@@ -8,10 +8,9 @@ import java.util.Scanner;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        // let the user insert value inside the program
-
         Scanner scanner = new Scanner(System.in);
 
+        // https://stackoverflow.com/questions/13102045/scanner-is-skipping-nextline-after-using-next-or-nextfoo
         System.out.println("Insert the name: ");
         String name = scanner.nextLine().trim();
 
