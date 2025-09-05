@@ -1,6 +1,11 @@
 import {getEl, createEl} from './dom.js'
 import { getTextLength, getNumberOfWords  } from './textoperations.js'
 
+/* const reactElement1 = React.createElement('h1', { className: 'greeting' }, 'Hello ');
+const rootElement = document.getElementById('root');
+const root = ReactDOM.createRoot(rootElement);
+root.render(reactElement1) */
+
 const FORM_ID = 'text-form'
 const FATHER_ID = 'father'
 
