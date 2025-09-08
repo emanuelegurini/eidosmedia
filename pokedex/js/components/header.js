@@ -1,6 +1,6 @@
-import { createEl } from "../dom.js"
+import { createEl } from "../utils.js"
 
-export const header = () => {
+export const Header = () => {
 	const header = createEl('header')
 	const h1 = createEl('h1')
 	h1.innerHTML = "Pokedex"

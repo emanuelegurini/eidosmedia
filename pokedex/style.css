@@ -4,34 +4,28 @@
 	font-family: "Roboto", sans-serif;
 }
 
-#main-section {
+#content {
 	display: flex;
 }
 
-#main-section div {
+#content div {
 	flex: 1;
 }
 
-
-#pokemon-list {
+ul {
 	border: 1px solid #000;
 }
 
-#pokemon-list li {
+ul li {
 	border: 1px solid green;
 }
 
-#nav-section {
+nav {
 	display: flex;
 }
 
-#nav-section div {
+nav div {
 	flex: 1;
 	display: flex;
 	justify-content: center;
 }
-
-
-
-
-
