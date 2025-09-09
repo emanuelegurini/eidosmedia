@@ -1,0 +1,48 @@
+[x] Recap
+	- React 
+		- Vite (builder tool)
+		- package.json
+		- module
+
+[x] Data types in JS
+	- primitive:
+		- number --> ±(2 to power of 53-1)
+		- bigint
+		- string
+		- boolean
+		- null --> for unknown values
+		- undefined --> for unassigned values 
+		- symbol
+
+	- non primitive: 
+		- referenced types (objects)
+			- Objects
+			- Array
+			- functions
+
+	- Question: how can i know what type of data is?
+		- typeof x or typeof(x)
+
+[x] Objects
+	- store properties (key-value pairs)
+	- get value: 
+		- dot notation
+		- square brackets 
+		- delete property 
+		- for (let key in obj)
+		- Optional chaining '?.'
+			- works as value.prop, if value exists,
+			- otherwise (when value is undefined/null) it returns undefined.
+		- always const!!!
+		- destructuring objects
+
+[x] Array
+	- ordered data items
+	- array methods
+	- spread operator
+	- destructuring objecs
+
+[ ] React
+	- what is a component
+	- Hooks
+		-	useState 
