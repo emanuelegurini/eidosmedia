@@ -1,4 +1,4 @@
-import { createEl } from "../utils.js"
+import { createEl } from "../modules/utils.js"
 
 export const Header = () => {
 	const header = createEl('header')

@@ -1,12 +1,12 @@
-import { createEl } from "../utils.js"
+import { createEl } from "../modules/utils.js"
 
-export const PokemonList = (data) => {
+export const PokemonList = (list) => {
 	const ul = createEl('ul')
 
-	data?.forEach(pokemon => {
+	list?.forEach(pokemon => {
 		const li = createEl('li')
+		li.innerHTML = pokemon?.name?.toUpperCase() || 'name not available'
 		ul.appendChild(li)
-		return li.innerHTML = pokemon?.name?.toUpperCase() || 'name not available'
 	})
 
 	return ul

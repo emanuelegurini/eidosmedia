@@ -1,11 +1,13 @@
-import { createEl } from "../utils.js"
+import { createEl } from "../modules/utils.js"
 import { PokemonList } from "./pokemonList.js"
 import { Nav } from "./Nav.js"
+import { PokemonService } from "../services/pokemonService.js"
 
-export const Main = (data) => {
+export const Main = (apiData) => {
+	let currentData = apiData
+	let nextUrl = apiData?.next || null
+	let prevUrl = apiData?.previous || null
 
-	const list = data ? [...data] : []
-	
 	const main = createEl('main')
 
 	const mainSection = createEl('div')
@@ -21,11 +23,59 @@ export const Main = (data) => {
 	mainSection.appendChild(left)
 	mainSection.appendChild(right)
 
-	const pokemonList = PokemonList(list)
+	const updateContent = (newApiResponse) => {
+		currentData = newApiResponse
+		nextUrl = newApiResponse?.next || null
+		prevUrl = newApiResponse?.previous || null
 
-	left.appendChild(pokemonList)
+		left.innerHTML = ''
+		
+		const newPokemonList = PokemonList(newApiResponse?.results || [])
+		left.appendChild(newPokemonList)
 
-	main.appendChild(Nav())
+		updateNavButtons()
+	}
+
+	const updateNavButtons = () => {
+		nav.updateState({
+			hasNext: !!nextUrl,
+			hasPrev: !!prevUrl
+		})
+	}
+
+	const handleNext = async () => {
+		if (nextUrl) {
+			try {
+				const newData = await PokemonService.fetchUrl(nextUrl)
+				updateContent(newData)
+			} catch (error) {
+				console.error('Error loading next page:', error)
+			}
+		}
+	}
+
+	const handlePrev = async () => {
+		if (prevUrl) {
+			try {
+				const newData = await PokemonService.fetchUrl(prevUrl)
+				updateContent(newData)
+			} catch (error) {
+				console.error('Error loading previous page:', error)
+			}
+		}
+	}
+
+	const initialPokemonList = PokemonList(apiData?.results || [])
+	left.appendChild(initialPokemonList)
+
+	const nav = Nav({
+		onNext: handleNext,
+		onPrev: handlePrev,
+		hasNext: !!nextUrl,
+		hasPrev: !!prevUrl
+	})
+
+	main.appendChild(nav)
 
 	return main
 }
