@@ -1,32 +1,49 @@
 import { useState } from 'react'
-import { Result } from './components/Result';
 import { Button } from './components/Button';
 import { List } from './components/List';
 
 const App = () => {
-  const [list, setList] = useState(['buy coffe', 'make pasta'])
-  const [toDo, setTodo] = useState('') 
+  const [mortgage, setMortgage] = useState({
+      amount: 0, 
+      term: 0, 
+      rate: '',
+    })
 
-  const addToDo = () => {
-     setList((prev) => [...prev, toDo]);
-  }
-
-  const handleInput = (e) => {
-    setTodo(e.target.value);
-  }
+    const updateMortgage = (e) => {
+      const inputName = e.target.name;
+      setMortgage((prev) => ({ ...prev, [inputName]: e.target.value }));
+    }
 
   return (
     <>
       <div>
-        <List list={list} />
+
+        {mortgage.amount}
+        {mortgage.term}
+        {mortgage.rate}
 
         <input 
-          onChange={handleInput}
+          onChange={updateMortgage}
+          name='amount'
+          type='number'  
+          className='border-black border-2'
+        />
+
+        <input 
+          onChange={updateMortgage}
+          name='term'
+          type='number'  
+          className='border-black border-2'
+        />
+
+        <input 
+          onChange={updateMortgage}
+          name='rate'
           type='text'  
           className='border-black border-2'
         />
 
-        <Button color={'pink'} text={'Add todos'} pateta={addToDo} /> 
+        <Button color={'pink'} text={'Add todos'} pateta={() => console.log('hello')} /> 
         
         <div className={"flex gap-2"}>
         </div>
