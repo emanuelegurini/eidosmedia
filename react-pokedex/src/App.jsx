@@ -1,15 +1,25 @@
-import { Header } from './components/Header'
-import { Main } from './components/Main'
-
-import './App.css'
+import { useState } from 'react'
+import { Button } from './components/Button'
 
 function App() {
+
+  const [count, setCount] = useState(0)
+
   return (
-    <>
-      <Header />
-      <Main />
-    </>
-  )
+    <div className="flex gap-2">
+      <Button
+        text="minus"
+        color="pink"
+        pateta={() => setCount((prev) => prev - 1)}
+      />
+      <div>{count}</div>
+      <Button
+        text="add"
+        color="green"
+        pateta={() => setCount((prev) => prev + 1)}
+      />
+    </div>
+  );
 }
 
 export default App
