@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Button } from './components/Button';
-import { List } from './components/List';
 
 const App = () => {
   const [mortgage, setMortgage] = useState({
