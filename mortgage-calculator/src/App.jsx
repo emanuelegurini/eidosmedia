@@ -1,52 +1,80 @@
 import { useState } from 'react'
-import { Button } from './components/Button';
+
+const initForm = {
+  input1 : { 
+    type: "text",
+    name: "input1",
+    required: true,
+    placeholder: "Type here", 
+    value: "",
+    id: 'input1',
+    classNames: 'border-2 border-black'
+  },
+  input2 : { 
+    type: "text",
+    name: "input2",
+    required: true,
+    placeholder: "Type here", 
+    value: "",
+    id: 'input2',
+    classNames: 'border-2 border-black'
+  },
+
+} 
+
+  const createForm = (list, handleChange) => {
+    let form = [];
+
+    for (const [, value] of Object.entries(list)) {
+      form = [
+        ...form,
+        <input
+          type={value.type}
+          name={value.name}
+          placeholder={value.placeholder}
+          value={value.value}
+          id={value.id}
+          key={value.id}
+          className={value.classNames}
+          onChange={handleChange}
+        />,
+      ];
+    }
+
+    return form;
+  };
 
 const App = () => {
-  const [mortgage, setMortgage] = useState({
-      amount: 0, 
-      term: 0, 
-      rate: '',
-    })
 
-    const updateMortgage = (e) => {
-      const inputName = e.target.name;
-      setMortgage((prev) => ({ ...prev, [inputName]: e.target.value }));
-    }
+  const [formStruct, setFormStruct] = useState(initForm)
+
+  const handleChange = (e) => {
+    setFormStruct(prev => ({...prev, [e.target.name] : { ...prev[e.target.name], value: e.target.value }}))
+  }
 
   return (
     <>
-      <div>
-
-        {mortgage.amount}
-        {mortgage.term}
-        {mortgage.rate}
-
-        <input 
-          onChange={updateMortgage}
-          name='amount'
-          type='number'  
-          className='border-black border-2'
-        />
-
-        <input 
-          onChange={updateMortgage}
-          name='term'
-          type='number'  
-          className='border-black border-2'
-        />
-
-        <input 
-          onChange={updateMortgage}
-          name='rate'
-          type='text'  
-          className='border-black border-2'
-        />
-
-        <Button color={'pink'} text={'Add todos'} pateta={() => console.log('hello')} /> 
-        
-        <div className={"flex gap-2"}>
-        </div>
-      </div>
+      {createForm(formStruct, handleChange).map((el) => {
+        return el;
+      })}
+      <button
+        onClick={() => {
+          setFormStruct((prev) => ({
+            ...prev,
+            ["input" + (Object.entries(prev).length + 1)]: {
+              type: "text",
+              name: "input" + (Object.entries(prev).length + 1),
+              required: true,
+              placeholder: "Type here",
+              value: "",
+              id: "input" + (Object.entries(prev).length + 1),
+              classNames: "border-2 border-black",
+            },
+          }));
+        }}
+      >
+        Add
+      </button>
     </>
   );
 }
