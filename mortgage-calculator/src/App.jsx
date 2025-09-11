@@ -19,30 +19,29 @@ const initForm = {
     id: 'input2',
     classNames: 'border-2 border-black'
   },
-
 } 
 
-  const createForm = (list, handleChange) => {
-    let form = [];
+const createForm = (list, handleChange) => {
+  let form = [];
 
-    for (const [, value] of Object.entries(list)) {
-      form = [
-        ...form,
-        <input
-          type={value.type}
-          name={value.name}
-          placeholder={value.placeholder}
-          value={value.value}
-          id={value.id}
-          key={value.id}
-          className={value.classNames}
-          onChange={handleChange}
-        />,
-      ];
-    }
+  for (const [, value] of Object.entries(list)) {
+    form = [
+      ...form,
+      <input
+        type={value.type}
+        name={value.name}
+        placeholder={value.placeholder}
+        value={value.value}
+        id={value.id}
+        key={value.id}
+        className={value.classNames}
+        onChange={handleChange}
+      />,
+    ];
+  }
 
-    return form;
-  };
+  return form;
+};
 
 const App = () => {
 
