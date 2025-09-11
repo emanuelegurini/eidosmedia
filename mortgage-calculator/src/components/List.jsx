@@ -2,7 +2,6 @@ import React from "react";
 
 export const List = React.memo(({list}) => {
 
-	console.log('hello')
 	return (
     <ul>
       {list.map((el) => {
