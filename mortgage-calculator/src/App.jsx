@@ -1,5 +1,7 @@
 import { useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Button } from './components/Button';
+
 import { initForm } from './constants/formConstant';
 import { createForm } from './utils/formUtils';
 
@@ -64,7 +66,28 @@ const App = () => {
         />
 
         {showElement && <p>Hello, Pateta</p>}
-        <button onClick={() => setShowElement(prev => !prev)}>show</button>
+        {showElement &&
+          createPortal(
+            <div className="fixed inset-0 z-50 flex items-center justify-center">
+              {/* Backdrop */}
+              <div className="absolute inset-0 bg-grey bg-opacity-50 backdrop-blur-sm" />
+              {/* Dialog Container */}
+              <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full mx-4 p-6 transform transition-all">
+                {/* Header */}
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-semibold text-gray-900">
+                    Dialog Title
+                  </h2>
+                  <button onClick={() => setShowElement((prev) => !prev)}>
+                    Don't show
+                  </button>
+                </div>
+              </div>
+            </div>,
+            document.body
+          )}
+
+        <button onClick={() => setShowElement((prev) => !prev)}>show</button>
       </div>
     </div>
   );
