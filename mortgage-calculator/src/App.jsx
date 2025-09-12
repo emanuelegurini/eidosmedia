@@ -7,6 +7,7 @@ const App = () => {
 
   const [formStruct, setFormStruct] = useState(initForm)
   const [selectedInput, setSelectedInput] = useState('')
+  const [showElement, setShowElement] = useState(false)
 
   const handleChange = (e) => {
     setFormStruct(prev => ({...prev, [e.target.name] : { ...prev[e.target.name], value: e.target.value }}))
@@ -55,7 +56,15 @@ const App = () => {
           <option value="password">Password</option>
         </select>
 
-        <Button disabled={!selectedInput} text="Add" color="pink" pateta={handleAddInput} />
+        <Button
+          disabled={!selectedInput}
+          text="Add"
+          color="pink"
+          pateta={handleAddInput}
+        />
+
+        {showElement && <p>Hello, Pateta</p>}
+        <button onClick={() => setShowElement(prev => !prev)}>show</button>
       </div>
     </div>
   );
