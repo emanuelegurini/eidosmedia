@@ -5,9 +5,7 @@ import App from './App.jsx'
 import {TodoProvider} from "./providers/TodoProvider.jsx";
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
       <TodoProvider>
           <App />
       </TodoProvider>
-  </StrictMode>,
 )
