@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 
-
 const initialState = {
     "title": "New Product",
     "price": 10,
@@ -9,74 +8,85 @@ const initialState = {
     "images": ["https://placehold.co/600x400"]
 }
 
-/*
-*   1. I need a form
-*   2. I need to store the data in state
-*   3. I need to send data stored in the state with the fetch method
-*   4. Data should be parsed before sending to the browser
-*
-*/
+const fetchProduct = async(productId) => {
+    const response = await fetch(`https://api.escuelajs.co/api/v1/products/${productId}`)
+    if (!response.ok) {
+        throw new Error(`HTTP Error: ${response.status}`)
+    }
+    return response.json()
+}
+
+const fetchProducts = async() => {
+    const response = await fetch(`https://api.escuelajs.co/api/v1/products`)
+    if (!response.ok) {
+        throw new Error(`HTTP Error: ${response.status}`)
+    }
+    return await response.json()
+}
+
+const saveProduct = async(body) => {
+    const response = await fetch(`https://api.escuelajs.co/api/v1/products`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body)
+        }
+    )
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch products.");
+    }
+
+    return await response.json()
+}
+
+const getProductsList = async() => {
+    const products = await fetchProducts()
+    return products.map(product => { return {
+        id: product.id,
+        title: product.title,
+        price: product.price
+    }})
+}
 
 export const ProductList = () => {
-
     const [form, setForm] = useState(initialState);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [productList, setProductList] = useState([]);
 
-
-    /*
-     * This function get all products stored in the server
-     */
-    const fetchData = () => {
-
-        fetch(`https://api.escuelajs.co/api/v1/products`)
-            .then(res => res.json())
-            .then(data => setProductList(data))
-            .catch(err => console.log(err))
-            .finally(() => setLoading(false));
-
+    const loadProducts = async () => {
+        try {
+            setLoading(true);
+            const products = await getProductsList()
+            setProductList(products)
+        } catch (error) {
+            setError(error)
+        } finally {
+            setLoading(false);
+        }
     }
 
     useEffect(() => {
-
-        setLoading(true);
-        fetchData()
+        loadProducts()
     }, [])
 
-    /*
-     * This function handle the submit event, executing the post request to the server
-     */
-    const handleSubmit = (e) => {
-
-        // This e.preventDefault blocks the page refreshing,
-        // as default behaviour of the application
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
-        setLoading(true);
-
-        fetch(`https://api.escuelajs.co/api/v1/products`, {
-            method: 'POST',
-            headers: {
-                "Content-Type": 'application/json',
-            },
-            body: JSON.stringify(form)
-        })
-            .then(res => res.json())
-            .then(data => {
-
-                if(data.statusCode !== 200) {
-                    setError(data);
-                }
-
-                console.log(data);
-                setForm(initialState)
-                fetchData()
-            })
-            .catch(err => console.log(err))
-            .finally(() => {
-                setLoading(false);
-        })
+        try {
+            setLoading(true);
+            setError(null);
+            const product = await saveProduct(form)
+            console.log(product)
+            setForm(initialState)
+            await loadProducts()
+        } catch (error) {
+            setError(error)
+        } finally {
+            setLoading(false);
+        }
     }
 
     const handleInputChange = (e) => {
@@ -110,14 +120,16 @@ export const ProductList = () => {
                 />
 
                 { loading ? 'Loading..' : <input type='submit' value='Submit' className='border-2 border-gray-300 bg-gray-300' /> }
-                { error && <p className={'bg-amber-200'}>{error.message}</p> }
+                { error && <p className={'bg-red-300 p-2'}>{error.message}</p> }
 
             </form>
-            {
-                productList.map(product => (
-                    <div key={product.id}>{product.title}</div>
-                ))
-            }
+            <div>
+                {
+                    productList.map(product => (
+                        <div key={product.id}>{product.id} - {product.title}</div>
+                    ))
+                }
+            </div>
         </div>
     )
 }
