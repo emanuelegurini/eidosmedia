@@ -1,5 +1,5 @@
 import './App.css'
-import {TodoProvider, TodoContext} from "./providers/TodoProvider.jsx";
+import {TodoContext} from "./providers/TodoProvider.jsx";
 import {List} from "./components/List.jsx";
 import {Header} from "./components/Header.jsx";
 import {ItemList} from "./components/ItemList.jsx";

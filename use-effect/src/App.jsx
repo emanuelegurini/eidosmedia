@@ -2,6 +2,7 @@ import './App.css'
 import {List} from "./components/List.jsx";
 import {Header} from "./components/Header.jsx";
 import {useEffect, useState} from "react";
+import {ProductList} from "./components/ProductList.jsx";
 
 
 function App() {
@@ -22,22 +23,15 @@ function App() {
            .then(res => res.json())
            .then(data => setTodo(data))
 
-   }, [count]) // <-- this is the deps array
+   }, [count]) // <-- this is the deps array (optional)
 
   return (
           <div className="min-h-screen bg-gray-50">
               <Header />
               <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-lg">
-                  {
-                      count
-                  }
 
-                  <button className='border-2 border-amber-950 p-2' onClick={() => setCount(prev => prev + 1)}>update count</button>
-                  {
-                      todo?.title
-                  }
-                  <List>
-                  </List>
+                  <ProductList />
+
               </div>
           </div>
   )
