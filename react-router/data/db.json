@@ -1,0 +1,18 @@
+{
+  "forms": [
+    {
+      "id": "1",
+      "title": "a title",
+      "inputs": 1
+    },
+    {
+      "id": "2",
+      "title": "a title",
+      "inputs": 1
+    },
+    {
+      "title": "New Product",
+      "id": "d3a4"
+    }
+  ]
+}
